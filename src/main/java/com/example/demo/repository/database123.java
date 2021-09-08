@@ -6,5 +6,6 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 import java.util.Optional;
 
 public interface database123 extends MongoRepository<database, Integer> {
+    Optional<database> findByDate(String date);
 
 }

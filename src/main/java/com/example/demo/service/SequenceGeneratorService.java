@@ -2,6 +2,8 @@ package com.example.demo.service;
 
 
 import com.example.demo.model.DbSequence;
+import com.example.demo.model.database;
+import com.example.demo.repository.database123;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.query.Criteria;
@@ -10,6 +12,7 @@ import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Service;
 
 import java.util.Objects;
+import java.util.Optional;
 
 import static org.springframework.data.mongodb.core.FindAndModifyOptions.options;
 
@@ -19,6 +22,8 @@ public class SequenceGeneratorService {
 
     @Autowired
     private MongoOperations mongoOperations;
+    @Autowired
+    public database123 databaserepo ;
 
 
     public int getSequenceNumber(String sequenceName) {
@@ -33,5 +38,20 @@ public class SequenceGeneratorService {
                         DbSequence.class);
 
         return !Objects.isNull(counter) ? counter.getSeq() : 1;
+    }
+    public database find(String a)
+    {
+         database z;
+        try
+        {
+            Optional<database> temp= this.databaserepo.findByDate(a);
+              z= temp.get();
+        }
+        catch(Exception e)
+        {
+            z=null;
+        }
+
+        return z;
     }
 }

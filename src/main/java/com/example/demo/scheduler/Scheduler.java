@@ -1,5 +1,4 @@
 package com.example.demo.scheduler;
-
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import com.example.demo.model.database;
@@ -17,26 +16,35 @@ public class Scheduler
     @Autowired
     private SequenceGeneratorService service;
     @Autowired
-public database123 d123;
-    private static final SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
+    public database123 d123;
+    private static final SimpleDateFormat dateFormat = new SimpleDateFormat("MM:yy:dd");
     static int count=0;
-    @Scheduled(initialDelay =2000 ,fixedDelay = 20000 )
+    @Scheduled(initialDelay =2000 ,fixedDelay = 2000 )
     public void reportCurrentTime()
     {
         System.out.println("Current time = " +count+" "  + dateFormat.format(new Date()));
         count++;
     }
-    @Scheduled(initialDelay =20000 ,fixedDelay = 100000 )
+    @Scheduled(initialDelay =20000 ,fixedDelay = 20000 )
     public void pushitindatabase()
     {
         System.out.println("pushtime = " +count);
-         database d=new database();
-         d.setCount(count);
-         System.out.println(service.getSequenceNumber(SEQUENCE_NAME));
-         d.setId(service.getSequenceNumber(SEQUENCE_NAME));
-         d.setDate(new Date());
-         d123.save(d);
+        String da=dateFormat.format(new Date());
+        database temp=this.service.find(da);
 
+        if(temp!=null)
+        {
+            temp.setCount(count);
+            d123.save(temp);
+        }
+        else
+        {
+            database d=new database();
+            d.setCount(count);
+            d.setId(service.getSequenceNumber(SEQUENCE_NAME));
+            d.setDate(da);
+            d123.save(d);
+        }
 
     }
 

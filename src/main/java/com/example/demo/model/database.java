@@ -21,13 +21,13 @@ public class database
 
     @Id
     private int id;
-    private Date date;
+    private String date;
     public database()
     {
 
     }
 
-    public database(int id, Date date, int count) {
+    public database(int id, String date, int count) {
         super();
        this. id = id;
         this.date = date;
@@ -39,11 +39,11 @@ public class database
 
 
 
-    public Date getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(String date) {
         this.date = date;
     }
 
